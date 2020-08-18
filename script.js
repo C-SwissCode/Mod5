@@ -1,21 +1,44 @@
 // Closures:
-function interviewQuestion(job) {
-  if (job === 'designer') {
-    return function(name) {
-      console.log(name + ', can you please explain what UX design is?');
-  }
-} else if (job === 'teacher') {
-  return function(name) {
-  console.log('What subject do you teach ' + name + '?');
-  }
-} else {
-  return function(name) {
-    console.log('Hello ' + name + ', what do you do?');
-  }
-}
-}
+// function interviewQuestion(job) {
+//   if (job === 'designer') {
+//     return function(name) {
+//       console.log(name + ', can you please explain what UX design is?');
+//   }
+// } else if (job === 'teacher') {
+//   return function(name) {
+//   console.log('What subject do you teach ' + name + '?');
+//   }
+// } else {
+//   return function(name) {
+//     console.log('Hello ' + name + ', what do you do?');
+//   }
+// }
+// }
 
-interviewQuestion('designer')('Caleb');
+// interviewQuestion('designer')('Caleb');
+
+// function interviewQuestion(job) {
+//   var designQ = ', can you please explain what UX design is?';
+//   var teachQ = 'What subject do you teach ';
+//   var otherJob = 'What do you do ';
+//   return function (name) {
+//     switch (job) {
+//       case 'designer':
+//         console.log(name + designQ);
+//         break;
+//       case 'teacher':
+//         console.log(teachQ + name + '?')
+//         break;
+//       default:
+//         console.log(otherJob + name + '?');
+//     }
+//   }
+// }
+
+// interviewQuestion('teacher')('Caleb');
+
+
+
 
 
 // Function constructor
@@ -90,8 +113,10 @@ interviewQuestion('designer')('Caleb');
 // john.presentation.call(emily, 'friendly', 'afternoon');
 
 
-// //Bind method: doesn't immedietly call the function but instead it generates a copy of the function that it can be stored somewhere.
-// //the bind method allows us to preset arguments for a function/method which is known as a technique called currying.
+//Bind method: doesn't immedietly call the function but instead it generates a copy of the function that it can be stored somewhere.
+//the bind method allows us to preset arguments for a function/method which is known as a technique called currying.
+//Apply method: like bind but it expects an array as an argument, Example:
+// john.presentation.apply(emily, ['friendly', 'afternoon']);
 // var johnFriendly = john.presentation.bind(john, 'friendly');
 
 // johnFriendly('morning');
@@ -165,13 +190,31 @@ c) correct answer (I would use a number for this)
 11. Display the score in the console. Use yet another method for this.
 */
 
-var Question = function(consoleQuestion, answerArry, correctAnswer) {
-  this.consoleQuestion = consoleQuestion,
-  this.answerArry = answerArry,
-  this.correctAnswer = correctAnswer;
+var Question = function (consoleQuestion, answerArry, correctAnswer) {
+  this.consoleQuestion = consoleQuestion;
+  this.answerArry = answerArry;
+  this.correctAnswer = answerArry[correctAnswer];
 }
 
+var footballAnswers, fallFootballQ, electionAnswers, electionQ, investAnswers, investQ, goToMarsAnswers, goToMarsQ;
 
-var footballAnswers = ['yes', 'no', 'yes but only some conferences'];
-var fallFootballQ = new Question('Will football be played in the US this fall?', footballAnswers, footballAnswers[2]);
-console.log(fallFootballQ.consoleQuestion);
+//Election Question
+electionAnswers = {
+  trumpOutright: 'Trump Wins!',
+  kamalaContests: 'Trump wins, Biden gives up but Kamala contests',
+  nancyContests: 'Trump wins, Biden withdraws, Kamala illigitimate, and Nancy Palosi contests to be the next in line to take power, society goes nuts and people\'s heads explode',
+  arry: [this.trumpOutright, this.kamalaContests, this.nancyContests]
+};
+electionQ = new Question('What will the 2020 election result be?', electionAnswers.arry, 3);
+
+//Football Question
+footballAnswers = ['yes', 'no', 'yes but only some conferences'];
+fallFootballQ = new Question('Will football be played in the US this fall?', footballAnswers, 2);
+
+//Best investment of 2020 Question
+investAnswers = ['Iraqi Dinar', 'Zion Oil and Gas Exploration', 'XRP', 'BBB', 'Gold or Silver'];
+investQ = new Question('What investment will have the highest rate of return in 2020?', investAnswers, 0);
+
+//Future of Mars Question
+goToMarsAnswers = [2022, 2025, 2030, 2049];
+goToMarsQ = new Question('When will humans visit Mars for the first time?', goToMarsAnswers, goToMarsAnswers.indexOf(2049));
