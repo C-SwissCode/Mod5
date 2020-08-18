@@ -194,6 +194,12 @@ var Question = function (consoleQuestion, answerArry, correctAnswer) {
   this.consoleQuestion = consoleQuestion;
   this.answerArry = answerArry;
   this.correctAnswer = answerArry[correctAnswer];
+  this.listQandA = function () {
+    console.log(this.consoleQuestion);
+    for (i = 0; i < answerArry.length; i++) {
+      console.log(i + 1 + '.', this.answerArry[i]);
+    }
+  };
 }
 
 var footballAnswers, fallFootballQ, electionAnswers, electionQ, investAnswers, investQ, goToMarsAnswers, goToMarsQ;
@@ -203,9 +209,11 @@ electionAnswers = {
   trumpOutright: 'Trump Wins!',
   kamalaContests: 'Trump wins, Biden gives up but Kamala contests',
   nancyContests: 'Trump wins, Biden withdraws, Kamala illigitimate, and Nancy Palosi contests to be the next in line to take power, society goes nuts and people\'s heads explode',
-  arry: [this.trumpOutright, this.kamalaContests, this.nancyContests]
+  arry: function () {
+    return [this.trumpOutright, this.kamalaContests, this.nancyContests];
+  }
 };
-electionQ = new Question('What will the 2020 election result be?', electionAnswers.arry, 3);
+electionQ = new Question('What will the 2020 election result be?', electionAnswers.arry(), 3);
 
 //Football Question
 footballAnswers = ['yes', 'no', 'yes but only some conferences'];
@@ -218,3 +226,14 @@ investQ = new Question('What investment will have the highest rate of return in 
 //Future of Mars Question
 goToMarsAnswers = [2022, 2025, 2030, 2049];
 goToMarsQ = new Question('When will humans visit Mars for the first time?', goToMarsAnswers, goToMarsAnswers.indexOf(2049));
+
+allQuestionsArry = [electionQ, fallFootballQ, investQ, goToMarsQ];
+
+//Chose Random Questioin
+var questionNumber;
+var selectRandomQ = function () {
+  questionNumber = Math.floor(Math.random() * allQuestionsArry.length);
+  allQuestionsArry[questionNumber].listQandA();
+}
+selectRandomQ();
+var userSelection = prompt('Select the correct answer') - 1;
