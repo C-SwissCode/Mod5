@@ -188,19 +188,21 @@ c) correct answer (I would use a number for this)
 10. Track the user's score to make the game more fun! So each time an answer is correct, add 1 point to the score (Hint: I'm going to use the power of closures for this, but you don't have to, just do this with the tools you feel more comfortable at this point).
 
 11. Display the score in the console. Use yet another method for this.
+
+---Need to transfer the questions to the webpage instead of using the console. HTML input, submit button, and output have been set up.
 */
 
 (function() {
-  console.log('Hello');
   
   var Question = function (consoleQuestion, answerArry, correctAnswer) {
     this.consoleQuestion = consoleQuestion;
-  this.answerArry = answerArry;
-  this.correctAnswer = correctAnswer;
-  // this.correctAnswer = answerArry[correctAnswer];
-  this.listQandA = function () {
-    console.log(this.consoleQuestion);
-    for (i = 0; i < answerArry.length; i++) {
+    this.answerArry = answerArry;
+    this.correctAnswer = correctAnswer;
+    // this.correctAnswer = answerArry[correctAnswer];
+    this.listQandA = function () {
+      console.log(this.consoleQuestion);
+      document.querySelector('.output').textContent = 'test';
+      for (i = 0; i < answerArry.length; i++) {
       console.log(i + 1 + '.', this.answerArry[i]);
     }
   };
@@ -257,16 +259,16 @@ var selectRandomQ = function() {
 selectRandomQ();
 
 // Continue game after each question
-var continueGame = function() {
-  for (i = 0; i >= 0; i++) {
-    if (userSelection !== 'exit') {
-      selectRandomQ();
-    } else {
-      i = -1;
-    }
-  }
-}
-continueGame();
+// var continueGame = function() {
+//   for (i = 0; i >= 0; i++) {
+//     if (userSelection !== 'exit') {
+//       selectRandomQ();
+//     } else {
+//       i = -1;
+//     }
+//   }
+// }
+// continueGame();
 
 }())
 
