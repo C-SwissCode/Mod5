@@ -176,7 +176,7 @@ c) correct answer (I would use a number for this)
 
 5. Use the 'prompt' function to ask the user for the correct answer. The user should input the number of the correct answer such as you displayed it on Task 4.
 
-6. Check if the answer is correct and print to the console whether the answer is correct ot nor (Hint: write another method for this).
+6. Check if the answer is correct and print to the console whether the answer is correct ot not (Hint: write another method for this).
 
 7. Suppose this code would be a plugin for other programmers to use in their code. So make sure that all your code is private and doesn't interfere with the other programmers code (Hint: we learned a special technique to do exactly that).
 
@@ -190,10 +190,14 @@ c) correct answer (I would use a number for this)
 11. Display the score in the console. Use yet another method for this.
 */
 
-var Question = function (consoleQuestion, answerArry, correctAnswer) {
-  this.consoleQuestion = consoleQuestion;
+(function() {
+  console.log('Hello');
+  
+  var Question = function (consoleQuestion, answerArry, correctAnswer) {
+    this.consoleQuestion = consoleQuestion;
   this.answerArry = answerArry;
-  this.correctAnswer = answerArry[correctAnswer];
+  this.correctAnswer = correctAnswer;
+  // this.correctAnswer = answerArry[correctAnswer];
   this.listQandA = function () {
     console.log(this.consoleQuestion);
     for (i = 0; i < answerArry.length; i++) {
@@ -202,6 +206,18 @@ var Question = function (consoleQuestion, answerArry, correctAnswer) {
   };
 }
 
+Question.prototype.evaluateAnswer = function() {
+  if (userSelection === 'exit') {
+    this.result = 'Game Over';
+  } else if (userSelection -1 === this.correctAnswer) {
+    this.result = 'CORRECT!!!';
+  } else {
+    this.result = 'Incorrect :(';
+  }
+  console.log(this.result);
+}
+
+
 var footballAnswers, fallFootballQ, electionAnswers, electionQ, investAnswers, investQ, goToMarsAnswers, goToMarsQ;
 
 //Election Question
@@ -209,11 +225,11 @@ electionAnswers = {
   trumpOutright: 'Trump Wins!',
   kamalaContests: 'Trump wins, Biden gives up but Kamala contests',
   nancyContests: 'Trump wins, Biden withdraws, Kamala illigitimate, and Nancy Palosi contests to be the next in line to take power, society goes nuts and people\'s heads explode',
-  arry: function () {
+  arry: function() {
     return [this.trumpOutright, this.kamalaContests, this.nancyContests];
-  }
+  },
 };
-electionQ = new Question('What will the 2020 election result be?', electionAnswers.arry(), 3);
+electionQ = new Question('What will the 2020 election result be?', electionAnswers.arry(), 2);
 
 //Football Question
 footballAnswers = ['yes', 'no', 'yes but only some conferences'];
@@ -227,13 +243,30 @@ investQ = new Question('What investment will have the highest rate of return in 
 goToMarsAnswers = [2022, 2025, 2030, 2049];
 goToMarsQ = new Question('When will humans visit Mars for the first time?', goToMarsAnswers, goToMarsAnswers.indexOf(2049));
 
+//Chose Random Question and evaluate answer from user input
 allQuestionsArry = [electionQ, fallFootballQ, investQ, goToMarsQ];
-
-//Chose Random Questioin
-var questionNumber;
-var selectRandomQ = function () {
+var questionNumber, userSelection, previousResult;
+var selectRandomQ = function() {
   questionNumber = Math.floor(Math.random() * allQuestionsArry.length);
-  allQuestionsArry[questionNumber].listQandA();
+  var currentQuestion = allQuestionsArry[questionNumber];
+  currentQuestion.listQandA();
+  userSelection = prompt('Select the correct answer');
+  currentQuestion.evaluateAnswer();
+  previousResult = currentQuestion.result;
 }
 selectRandomQ();
-var userSelection = prompt('Select the correct answer') - 1;
+
+// Continue game after each question
+var continueGame = function() {
+  for (i = 0; i >= 0; i++) {
+    if (userSelection !== 'exit') {
+      selectRandomQ();
+    } else {
+      i = -1;
+    }
+  }
+}
+continueGame();
+
+}())
+
