@@ -227,8 +227,8 @@ c) correct answer (I would use a number for this)
   //Election Question
   electionAnswers = {
     trumpOutright: 'Trump Wins!',
-    kamalaContests: 'Trump wins, Biden gives up but Kamala contests',
-    nancyContests: 'Trump wins, Biden withdraws, Kamala illigitimate, and Nancy Palosi contests to be the next in line to take power, society goes nuts and people\'s heads explode',
+    kamalaContests: 'Trump wins, Biden gives up but Kamala contests.',
+    nancyContests: 'Trump wins, Biden withdraws, Kamala illigitimate, and Nancy Palosi contests to be the next in line to take power, society goes nuts and people\'s heads explode!',
     arry: function () {
       return [this.trumpOutright, this.kamalaContests, this.nancyContests];
     },
