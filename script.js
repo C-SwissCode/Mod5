@@ -201,12 +201,12 @@ c) correct answer (I would use a number for this)
     this.questionScreen = document.querySelector('.questionScreen');
     this.answerScreen = document.querySelector('.answerScreen');
     this.listQandA = function () {
+      this.answerOutput = [];
       this.questionScreen.textContent = this.consoleQuestion;
-      this.answerScreen.textContent = 0 + 1 + '. ' + this.answerArry[0];
       for (i = 0; i < answerArry.length; i++) {
-        console.log(i + 1 + '.', this.answerArry[i]);
-        this.answerScreen.textContent += i + 1 + '.', this.answerArry[i];
+        this.answerOutput.push(i + 1 + '. ' + this.answerArry[i])
       }
+      this.answerScreen.textContent = document.write(this.answerOutput.join(' <br> '));
     };
   }
 
@@ -255,7 +255,6 @@ c) correct answer (I would use a number for this)
     var currentQuestion = allQuestionsArry[questionNumber];
 
     currentQuestion.listQandA();
-    // userSelection = prompt('Select the correct answer');
     currentQuestion.evaluateAnswer();
     previousResult = currentQuestion.result;
   }
