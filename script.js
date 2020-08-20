@@ -192,83 +192,85 @@ c) correct answer (I would use a number for this)
 ---Need to transfer the questions to the webpage instead of using the console. HTML input, submit button, and output have been set up.
 */
 
-(function() {
-  
+(function () {
+
   var Question = function (consoleQuestion, answerArry, correctAnswer) {
     this.consoleQuestion = consoleQuestion;
     this.answerArry = answerArry;
     this.correctAnswer = correctAnswer;
-    // this.correctAnswer = answerArry[correctAnswer];
+    this.questionScreen = document.querySelector('.questionScreen');
+    this.answerScreen = document.querySelector('.answerScreen');
     this.listQandA = function () {
-      console.log(this.consoleQuestion);
-      document.querySelector('.output').textContent = 'test';
+      this.questionScreen.textContent = this.consoleQuestion;
+      this.answerScreen.textContent = 0 + 1 + '. ' + this.answerArry[0];
       for (i = 0; i < answerArry.length; i++) {
-      console.log(i + 1 + '.', this.answerArry[i]);
-    }
-  };
-}
-
-Question.prototype.evaluateAnswer = function() {
-  if (userSelection === 'exit') {
-    this.result = 'Game Over';
-  } else if (userSelection -1 === this.correctAnswer) {
-    this.result = 'CORRECT!!!';
-  } else {
-    this.result = 'Incorrect :(';
+        console.log(i + 1 + '.', this.answerArry[i]);
+        this.answerScreen.textContent += i + 1 + '.', this.answerArry[i];
+      }
+    };
   }
-  console.log(this.result);
-}
+
+  Question.prototype.evaluateAnswer = function () {
+    if (userSelection === 'exit') {
+      this.result = 'Game Over';
+    } else if (userSelection - 1 === this.correctAnswer) {
+      this.result = 'CORRECT!!!';
+    } else {
+      this.result = 'Incorrect :(';
+    }
+    console.log(this.result);
+  }
 
 
-var footballAnswers, fallFootballQ, electionAnswers, electionQ, investAnswers, investQ, goToMarsAnswers, goToMarsQ;
+  var footballAnswers, fallFootballQ, electionAnswers, electionQ, investAnswers, investQ, goToMarsAnswers, goToMarsQ;
 
-//Election Question
-electionAnswers = {
-  trumpOutright: 'Trump Wins!',
-  kamalaContests: 'Trump wins, Biden gives up but Kamala contests',
-  nancyContests: 'Trump wins, Biden withdraws, Kamala illigitimate, and Nancy Palosi contests to be the next in line to take power, society goes nuts and people\'s heads explode',
-  arry: function() {
-    return [this.trumpOutright, this.kamalaContests, this.nancyContests];
-  },
-};
-electionQ = new Question('What will the 2020 election result be?', electionAnswers.arry(), 2);
+  //Election Question
+  electionAnswers = {
+    trumpOutright: 'Trump Wins!',
+    kamalaContests: 'Trump wins, Biden gives up but Kamala contests',
+    nancyContests: 'Trump wins, Biden withdraws, Kamala illigitimate, and Nancy Palosi contests to be the next in line to take power, society goes nuts and people\'s heads explode',
+    arry: function () {
+      return [this.trumpOutright, this.kamalaContests, this.nancyContests];
+    },
+  };
+  electionQ = new Question('What will the 2020 election result be?', electionAnswers.arry(), 2);
 
-//Football Question
-footballAnswers = ['yes', 'no', 'yes but only some conferences'];
-fallFootballQ = new Question('Will football be played in the US this fall?', footballAnswers, 2);
+  //Football Question
+  footballAnswers = ['yes', 'no', 'yes but only some conferences'];
+  fallFootballQ = new Question('Will football be played in the US this fall?', footballAnswers, 2);
 
-//Best investment of 2020 Question
-investAnswers = ['Iraqi Dinar', 'Zion Oil and Gas Exploration', 'XRP', 'BBB', 'Gold or Silver'];
-investQ = new Question('What investment will have the highest rate of return in 2020?', investAnswers, 0);
+  //Best investment of 2020 Question
+  investAnswers = ['Iraqi Dinar', 'Zion Oil and Gas Exploration', 'XRP', 'BBB', 'Gold or Silver'];
+  investQ = new Question('What investment will have the highest rate of return in 2020?', investAnswers, 0);
 
-//Future of Mars Question
-goToMarsAnswers = [2022, 2025, 2030, 2049];
-goToMarsQ = new Question('When will humans visit Mars for the first time?', goToMarsAnswers, goToMarsAnswers.indexOf(2049));
+  //Future of Mars Question
+  goToMarsAnswers = [2022, 2025, 2030, 2049];
+  goToMarsQ = new Question('When will humans visit Mars for the first time?', goToMarsAnswers, goToMarsAnswers.indexOf(2049));
 
-//Chose Random Question and evaluate answer from user input
-allQuestionsArry = [electionQ, fallFootballQ, investQ, goToMarsQ];
-var questionNumber, userSelection, previousResult;
-var selectRandomQ = function() {
-  questionNumber = Math.floor(Math.random() * allQuestionsArry.length);
-  var currentQuestion = allQuestionsArry[questionNumber];
-  currentQuestion.listQandA();
-  userSelection = prompt('Select the correct answer');
-  currentQuestion.evaluateAnswer();
-  previousResult = currentQuestion.result;
-}
-selectRandomQ();
+  //Chose Random Question and evaluate answer from user input
+  allQuestionsArry = [electionQ, fallFootballQ, investQ, goToMarsQ];
+  var questionNumber, userSelection, previousResult;
+  var selectRandomQ = function () {
+    questionNumber = Math.floor(Math.random() * allQuestionsArry.length);
+    var currentQuestion = allQuestionsArry[questionNumber];
 
-// Continue game after each question
-// var continueGame = function() {
-//   for (i = 0; i >= 0; i++) {
-//     if (userSelection !== 'exit') {
-//       selectRandomQ();
-//     } else {
-//       i = -1;
-//     }
-//   }
-// }
-// continueGame();
+    currentQuestion.listQandA();
+    // userSelection = prompt('Select the correct answer');
+    currentQuestion.evaluateAnswer();
+    previousResult = currentQuestion.result;
+  }
+  selectRandomQ();
+
+  // Continue game after each question
+  // var continueGame = function() {
+  //   for (i = 0; i >= 0; i++) {
+  //     if (userSelection !== 'exit') {
+  //       selectRandomQ();
+  //     } else {
+  //       i = -1;
+  //     }
+  //   }
+  // }
+  // continueGame();
 
 }())
-
