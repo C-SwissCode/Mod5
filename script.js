@@ -210,15 +210,32 @@ c) correct answer (I would use a number for this)
     };
   }
 
+
+
   Question.prototype.evaluateAnswer = function () {
-    if (userSelection === 'exit') {
-      this.result = 'Game Over';
-    } else if (userSelection - 1 === this.correctAnswer) {
-      this.result = 'CORRECT!!!';
-    } else {
-      this.result = 'Incorrect :(';
+    var theAnswer = this.correctAnswer;
+    var userEntryEval = function() {
+      userSelection = document.getElementById('userInput').value;
+      if (userSelection === 'exit') {
+        this.result = 'Game Over';
+      } else if (userSelection -1 === theAnswer) {
+        this.result = 'CORRECT!!!';
+      } else {
+        this.result = 'Incorrect :(';
+      }
+      console.log(this.result);
     }
-    console.log(this.result);
+    document.querySelector('.btnSubmit').addEventListener('click', function() {
+      userEntryEval();
+      continueGame();
+    });
+    // document.getElementById('userInput').addEventListener('keypress', function(e) {
+    //   if (e.key === 'Enter') {
+    //     userEntryEval();
+    //   } else {
+    //     false;
+    //   }
+    // })
   }
 
 
@@ -249,27 +266,26 @@ c) correct answer (I would use a number for this)
 
   //Chose Random Question and evaluate answer from user input
   allQuestionsArry = [electionQ, fallFootballQ, investQ, goToMarsQ];
-  var questionNumber, userSelection, previousResult;
+  var questionNumber, previousResult, userSelection, currentQuestion;
   var selectRandomQ = function () {
     questionNumber = Math.floor(Math.random() * allQuestionsArry.length);
-    var currentQuestion = allQuestionsArry[questionNumber];
+    currentQuestion = allQuestionsArry[questionNumber];
 
     currentQuestion.listQandA();
-    currentQuestion.evaluateAnswer();
-    previousResult = currentQuestion.result;
   }
   selectRandomQ();
+  currentQuestion.evaluateAnswer();
+  previousResult = currentQuestion.result;
 
   // Continue game after each question
-  // var continueGame = function() {
-  //   for (i = 0; i >= 0; i++) {
-  //     if (userSelection !== 'exit') {
-  //       selectRandomQ();
-  //     } else {
-  //       i = -1;
-  //     }
-  //   }
-  // }
-  // continueGame();
+  function continueGame() {
+    for (i = 0; i <= 5; i++) {
+      if (userSelection !== 'exit') {
+        selectRandomQ();
+      } else {
+        console.log('game ended');
+      }
+    } 
+  }
 
 }())
