@@ -212,8 +212,8 @@ c) correct answer (I would use a number for this)
   }
 
   Question.prototype.evaluateAnswer = function () {
-    var theAnswer = this.correctAnswer;
     userSelection = document.getElementById('userInput').value;
+    var theAnswer = this.correctAnswer;
     if (userSelection === 'exit') {
       this.result = 'Game Over';
     } else if (userSelection - 1 === theAnswer) {
@@ -272,7 +272,11 @@ c) correct answer (I would use a number for this)
 
   document.querySelector('.btnSubmit').addEventListener('click', function () {
     currentQuestion.evaluateAnswer();
-    continueGame();
+    if (userSelection - 1 >= currentQuestion.answerArry.length || userSelection - 1 < 1) {
+      alert('Error: chose a valid answer dummy');
+    } else {
+      continueGame();
+    }
   });
 
   function continueGame() {
