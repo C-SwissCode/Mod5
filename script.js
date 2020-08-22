@@ -201,34 +201,28 @@ c) correct answer (I would use a number for this)
     this.questionScreen = document.querySelector('.questionScreen');
     this.answerScreen = document.querySelector('.answerScreen');
     this.listQandA = function () {
-      this.answerOutput = [];
-      this.questionScreen.textContent = this.consoleQuestion;
+      var answerOutput = [];
       for (i = 0; i < answerArry.length; i++) {
-        this.answerOutput.push(i + 1 + '. ' + this.answerArry[i])
+        answerOutput.push(i + 1 + '. ' + this.answerArry[i]);
       }
-      this.answerScreen.textContent = document.write(this.answerOutput.join(' <br> '));
+      this.questionScreen.textContent = this.consoleQuestion;
+      this.answerScreen.textContent = answerOutput.join('\n');
+      console.log(this.consoleQuestion);
     };
   }
 
-
-
   Question.prototype.evaluateAnswer = function () {
     var theAnswer = this.correctAnswer;
-    var userEntryEval = function() {
-      userSelection = document.getElementById('userInput').value;
-      if (userSelection === 'exit') {
-        this.result = 'Game Over';
-      } else if (userSelection -1 === theAnswer) {
-        this.result = 'CORRECT!!!';
-      } else {
-        this.result = 'Incorrect :(';
-      }
-      console.log(this.result);
+    userSelection = document.getElementById('userInput').value;
+    if (userSelection === 'exit') {
+      this.result = 'Game Over';
+    } else if (userSelection - 1 === theAnswer) {
+      this.result = 'CORRECT!!!';
+    } else {
+      this.result = 'Incorrect :(';
     }
-    document.querySelector('.btnSubmit').addEventListener('click', function() {
-      userEntryEval();
-      continueGame();
-    });
+    console.log(this.result);
+
     // document.getElementById('userInput').addEventListener('keypress', function(e) {
     //   if (e.key === 'Enter') {
     //     userEntryEval();
@@ -237,7 +231,6 @@ c) correct answer (I would use a number for this)
     //   }
     // })
   }
-
 
   var footballAnswers, fallFootballQ, electionAnswers, electionQ, investAnswers, investQ, goToMarsAnswers, goToMarsQ;
 
@@ -265,27 +258,41 @@ c) correct answer (I would use a number for this)
   goToMarsQ = new Question('When will humans visit Mars for the first time?', goToMarsAnswers, goToMarsAnswers.indexOf(2049));
 
   //Chose Random Question and evaluate answer from user input
-  allQuestionsArry = [electionQ, fallFootballQ, investQ, goToMarsQ];
+  var allQuestionsArry = [electionQ, fallFootballQ, investQ, goToMarsQ];
   var questionNumber, previousResult, userSelection, currentQuestion;
-  var selectRandomQ = function () {
+
+  function selectRandomQ() {
     questionNumber = Math.floor(Math.random() * allQuestionsArry.length);
     currentQuestion = allQuestionsArry[questionNumber];
 
     currentQuestion.listQandA();
-  }
+
+  };
   selectRandomQ();
-  currentQuestion.evaluateAnswer();
-  previousResult = currentQuestion.result;
+
+  document.querySelector('.btnSubmit').addEventListener('click', function () {
+    currentQuestion.evaluateAnswer();
+    continueGame();
+  });
+
+  function continueGame() {
+    if (currentQuestion.result !== 'Game Over') {
+      selectRandomQ();
+    } else {
+      false;
+    }
+  }
+  // previousResult = currentQuestion.result;
 
   // Continue game after each question
-  function continueGame() {
-    for (i = 0; i <= 5; i++) {
-      if (userSelection !== 'exit') {
-        selectRandomQ();
-      } else {
-        console.log('game ended');
-      }
-    } 
-  }
+  // function continueGame() {
+  //   for (i = 0; i <= 5; i++) {
+  //     if (userSelection !== 'exit') {
+  //       selectRandomQ();
+  //     } else {
+  //       console.log('game ended');
+  //     }
+  //   }
+  // }
 
 }())
