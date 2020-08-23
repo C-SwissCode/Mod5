@@ -216,6 +216,8 @@ c) correct answer (I would use a number for this)
     var theAnswer = this.correctAnswer;
     if (userSelection === 'exit') {
       this.result = 'Game Over';
+      previousResult = userSelection;
+      console.log(previousResult);
     } else if (userSelection - 1 === theAnswer) {
       this.result = 'CORRECT!!!';
     } else {
@@ -271,11 +273,15 @@ c) correct answer (I would use a number for this)
   selectRandomQ();
 
   document.querySelector('.btnSubmit').addEventListener('click', function () {
-    currentQuestion.evaluateAnswer();
-    if (userSelection - 1 >= currentQuestion.answerArry.length || userSelection - 1 < 1) {
-      alert('Error: chose a valid answer dummy');
+    if (previousResult === 'exit') {
+      false;
     } else {
-      continueGame();
+      currentQuestion.evaluateAnswer();
+      if (userSelection - 1 >= currentQuestion.answerArry.length || userSelection - 1 < 0) {
+        alert('Error: chose a valid answer dummy');
+      } else {
+        continueGame();
+      }
     }
   });
 
