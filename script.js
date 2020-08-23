@@ -209,6 +209,20 @@ c) correct answer (I would use a number for this)
       this.answerScreen.textContent = answerOutput.join('\n');
       console.log(this.consoleQuestion);
     };
+  };
+
+  var pointsArry = [0, 0];
+  var scoreTracker = function (specificQuestion) {
+    var correctPoints, incorrectPoints;
+    return function () {
+      if (specificQuestion.result === 'CORRECT!!!') {
+        pointsArry[0] += 1;
+      } else if (specificQuestion.result === 'Incorrect :(') {
+        pointsArry[1] += 1;
+      } else {
+        false;
+      }
+    }
   }
 
   Question.prototype.evaluateAnswer = function () {
@@ -224,16 +238,17 @@ c) correct answer (I would use a number for this)
       this.result = 'Incorrect :(';
     }
     console.log(this.result);
-
-    // document.getElementById('userInput').addEventListener('keypress', function(e) {
-    //   if (e.key === 'Enter') {
-    //     userEntryEval();
-    //   } else {
-    //     false;
-    //   }
-    // })
+    scoreTracker(currentQuestion)();
+    currentQuestion.displayScore();
   }
 
+  Question.prototype.displayScore = function () {
+    var writeScore = 'Correct: ' + pointsArry[0] + ' Incorrect: ' + pointsArry[1] + ' Total Questions: ' + (pointsArry[0] + pointsArry[1]);
+    document.querySelector('.score').textContent = writeScore;
+  }
+
+
+  //Build Question Objects
   var footballAnswers, fallFootballQ, electionAnswers, electionQ, investAnswers, investQ, goToMarsAnswers, goToMarsQ;
 
   //Election Question
@@ -272,7 +287,8 @@ c) correct answer (I would use a number for this)
   };
   selectRandomQ();
 
-  document.querySelector('.btnSubmit').addEventListener('click', function () {
+  //Submit and Enter key functionality
+  function initiateUserSubmission() {
     if (previousResult === 'exit') {
       false;
     } else {
@@ -283,6 +299,18 @@ c) correct answer (I would use a number for this)
         continueGame();
       }
     }
+  }
+
+  document.querySelector('.btnSubmit').addEventListener('click', function () {
+    initiateUserSubmission();
+  });
+
+  document.getElementById('userInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      initiateUserSubmission();
+    } else {
+      false;
+    }
   });
 
   function continueGame() {
@@ -292,17 +320,5 @@ c) correct answer (I would use a number for this)
       false;
     }
   }
-  // previousResult = currentQuestion.result;
-
-  // Continue game after each question
-  // function continueGame() {
-  //   for (i = 0; i <= 5; i++) {
-  //     if (userSelection !== 'exit') {
-  //       selectRandomQ();
-  //     } else {
-  //       console.log('game ended');
-  //     }
-  //   }
-  // }
 
 }())
